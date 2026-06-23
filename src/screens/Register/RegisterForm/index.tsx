@@ -1,21 +1,23 @@
 import { AppButton } from "@/components/AppButton";
 import { AppInput } from "@/components/AppInput";
 import { PublicStackParamList } from "@/routes/PublicRoutes";
-import { NavigationProp, useNavigation } from "@react-navigation/native";
+import { useNavigation, NavigationProp } from "@react-navigation/native";
 import { useForm } from "react-hook-form";
 import { View, Text } from "react-native";
 
-export interface FormLoginParams {
+interface FormRegisterParams {
+  name: string;
   email: string;
   password: string;
+  confirmPassword: string;
 }
 
-export const LoginForm = () => {
+export const RegisterForm = () => {
   const {
     control,
     handleSubmit,
     formState: { isSubmitting },
-  } = useForm<FormLoginParams>();
+  } = useForm<FormRegisterParams>();
 
   const navigation = useNavigation<NavigationProp<PublicStackParamList>>();
 
@@ -23,31 +25,46 @@ export const LoginForm = () => {
     <>
       <AppInput
         control={control}
+        name="name"
+        label="NOME"
+        placeholder="Seu nome"
+        leftIconName="user"
+      />
+      <AppInput
+        control={control}
         name="email"
-        label="E-MAIL"
+        label="EMAIL"
         placeholder="email@exemplo.com"
-        leftIconName="envelope-o"
+        leftIconName="envelope"
       />
       <AppInput
         control={control}
         name="password"
         label="SENHA"
-        placeholder="sua senha"
-        leftIconName="lock"
+        placeholder="Sua senha"
         secureTextEntry
+        leftIconName="lock"
+      />
+      <AppInput
+        control={control}
+        name="confirmPassword"
+        label="SENHA"
+        placeholder="Confirme sua Senha"
+        secureTextEntry
+        leftIconName="lock"
       />
       <View className="flex-1 justify-between mt-8 mb-6 min-h-[250px]">
-        <AppButton iconName="sign-in">Login</AppButton>
+        <AppButton iconName="sign-in">Cadastrar</AppButton>
         <View>
           <Text className="mb-6 text-gray-300 text-base">
-            Ainda não possui uma conta?
+            Já possui uma conta?
           </Text>
           <AppButton
-            onPress={() => navigation.navigate("Register")}
+            onPress={() => navigation.navigate("Login")}
             mode="outline"
             iconName="sign-in"
           >
-            Cadastrar
+            Entrar
           </AppButton>
         </View>
       </View>
